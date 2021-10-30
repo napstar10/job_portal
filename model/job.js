@@ -1,6 +1,7 @@
 import pkg from 'sequelize';
 const {  Sequelize, DataTypes, Model } = pkg;
 
+
 export default class Job extends Model {
   static init(sequelize) {
     return super.init({
@@ -10,40 +11,31 @@ export default class Job extends Model {
         primaryKey: true,
         autoIncrement: true
       },
-      email : {
+      title : {
         type: Sequelize.STRING,
-        allowNull: false,
-        unique: true,
       },
-      password : {
+      company_name : {
         type: Sequelize.STRING,
-        allowNull: false,
       },
-      mobile : {
+      location : {
         type: Sequelize.STRING,
-        allowNull: false,
-        unique: true,
-        isValid(value) {
-          if (isNaN(value) || value.length != 10) {
-            throw new Error('invalid mobile number!');
-          }
-        }
       },
-      role : {
+      position : {
         type: Sequelize.STRING,
-        isIn : [['SEEKER', "ADMIN"]]
       },
-      is_active: {
-        type: Sequelize.BOOLEAN,
-        defaultValue: false
+      specialization: {
+        type: Sequelize.STRING,
       },
-      otp : {
-        type : Sequelize.SMALLINT,
+      description: {
+        type: Sequelize.STRING,
       },
+      listed_by : {
+        type : Sequelize.STRING,
+      }
     },
     {
       sequelize,
-      tableName: "Users",
+      tableName: "Jobs",
       underscored:true,
       timestamps: true,
       paranoid: true,
