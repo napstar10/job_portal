@@ -9,15 +9,16 @@ import db from "../model/index.js";
  */
 export const addJob = async(userId, reqData) => {
     try{
-        const createRes = await db.User.findOne({where : {id : userId}});
-        if(createRes === null) {
+        const find = await db.User.findOne({where : {id : userId}});
+        if(find === null) {
             //user does not exist
-        } else if (createRes.role !== 'ADMIN') {
+            throw new Error('Not a valid User !');
+        } else if (find.role !== 'ADMIN') {
             throw new Error('You do not have admin rights !');
         } 
 
         reqData.JobId = userId;
-        reqData.listed_by = createRes.email;
+        reqData.listed_by = find.email;
 
         const addJobRes = await db.Job.create(reqData);        
         console.log(`addJobRes is : ${JSON.stringify(addJobRes)}`);
@@ -60,3 +61,40 @@ export const listJobs = async() => {
         return {success: false, message: e.message};
     }
 }
+
+/**
+ * service for update jobs
+ *  
+ */
+export const updateJob = async(userId, jobId, data) => {
+    try{
+        const createRes = await db.User.findOne({where : {id : userId}});
+        if(createRes === null) {
+            //user does not exist
+            throw new Error('Not a valid User !');
+        } else if (createRes.role !== 'ADMIN') {
+            throw new Error('You do not have admin rights !');
+        } 
+
+        delete data.jobId;
+
+        data.updated_by = createRes.email;
+
+        const updateRes = await db.Job.update(data, {where : { id : jobId }, returning: true });
+        console.log(`updateRes is : ${JSON.stringify(updateRes)}`);
+        return {};
+    }
+    catch(e){
+        console.log('Error in updateJob', e.stack);
+        return {success: false, message: e.message};
+    }
+}
+
+
+
+
+
+
+
+
+

@@ -5,7 +5,7 @@ import koaBody from 'koa-body';
 
 import {test} from './controller/test.js'
 import {create, verify, login} from './controller/user.js'
-import {add, view, list} from './controller/jobListing.js'
+import {add, view, list, update} from './controller/jobListing.js'
 
 const app = new Koa();
 const router = new Router();
@@ -22,7 +22,7 @@ router.post('/user/login', login);
 router.post('/job/add', add);
 router.get('/job/view/:id', view);
 router.get('/job/list', list);
-
+router.post('/job/update', update);
 
 
 app.use(koaBody({

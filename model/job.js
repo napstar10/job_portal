@@ -35,6 +35,9 @@ export default class Job extends Model {
       },
       listed_by : {
         type : Sequelize.STRING,
+      },
+      updated_by : {
+        type : Sequelize.STRING,
       }
     },
     {
