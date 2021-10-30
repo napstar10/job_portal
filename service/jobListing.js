@@ -44,3 +44,19 @@ export const viewJob = async(jobId) => {
         return {success: false, message: e.message};
     }
 }
+
+/**
+ * service for listJobs
+ *  
+ */
+export const listJobs = async() => {
+    try{
+        const viewRes = await db.Job.findAll({where : {is_active : true}});    
+        console.log(`viewRes is : ${JSON.stringify(viewRes)}`);
+        return viewRes;
+    }
+    catch(e){
+        console.log('Error in viewJob', e.stack);
+        return {success: false, message: e.message};
+    }
+}

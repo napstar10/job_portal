@@ -1,4 +1,4 @@
-import {addJob, viewJob} from '../service/jobListing.js'
+import {addJob, viewJob, listJobs} from '../service/jobListing.js'
 /**
  * Controller for adding a job 
  *  
@@ -39,7 +39,24 @@ export const view = async (ctx) => {
         ctx.body = {success: true, data : response};
     }
     catch(e){
-        console.log('Error in create controller', e.message);
+        console.log('Error in view controller', e.message);
+        ctx.status = 500;
+        ctx.body = { success : false, message: e.message };
+    }
+}
+
+/**
+ * Controller for veiwing a job 
+ *  
+ */
+export const list = async (ctx) => {
+    try{
+        const response = await listJobs();
+        ctx.status = 200;
+        ctx.body = {success: true, data : response};
+    }
+    catch(e){
+        console.log('Error in list controller', e.message);
         ctx.status = 500;
         ctx.body = { success : false, message: e.message };
     }

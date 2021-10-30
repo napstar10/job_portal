@@ -26,6 +26,10 @@ export default class Job extends Model {
       specialization: {
         type: Sequelize.STRING,
       },
+      is_active: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: true
+      },
       description: {
         type: Sequelize.STRING,
       },
