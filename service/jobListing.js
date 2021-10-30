@@ -4,7 +4,7 @@ import db from "../model/index.js";
 
 
 /**
- * service for user signup/create
+ * service for addJob
  *  
  */
 export const addJob = async(userId, reqData) => {
@@ -25,6 +25,22 @@ export const addJob = async(userId, reqData) => {
     }
     catch(e){
         console.log('Error in addJob', e.stack);
+        return {success: false, message: e.message};
+    }
+}
+
+/**
+ * service for viewJob
+ *  
+ */
+export const viewJob = async(jobId) => {
+    try{
+        const viewRes = await db.Job.findOne({where : {id : jobId}});     
+        console.log(`viewRes is : ${JSON.stringify(viewRes)}`);
+        return viewRes;
+    }
+    catch(e){
+        console.log('Error in viewJob', e.stack);
         return {success: false, message: e.message};
     }
 }
